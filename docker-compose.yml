@@ -11,8 +11,6 @@ services:
     image: docker/example-voting-app-result-app
     ports:
       - "80"
-    links:
-      - db
     networks:
       - voteapp
   worker:
@@ -25,12 +23,14 @@ services:
       - "6379"
     networks:
       - voteapp
+    container_name: redis
   db:
     image: postgres:9.4
     volumes:
       - "db-data:/var/lib/postgresql/data"
     networks:
       - voteapp
+    container_name: db
 volumes:
   db-data:
 
