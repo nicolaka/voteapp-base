@@ -2,19 +2,19 @@ version: "2"
 
 services:
   voting-app:
-    image: docker/example-voting-app-voting-app
+    image: ehazlett/dockercon-voting-app
     ports:
-      - "80"
+      - "80:80"
     networks:
       - voteapp
   result-app:
-    image: docker/example-voting-app-result-app
+    image: ehazlett/dockercon-result-app
     ports:
-      - "80"
+      - "5000:80"
     networks:
       - voteapp
   worker:
-    image: docker/example-voting-app-worker
+    image: ehazlett/dockercon-worker
     networks:
       - voteapp
   redis:
