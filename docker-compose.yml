@@ -2,34 +2,43 @@ version: "2"
 
 services:
   voting-app:
-    image: ehazlett/dockercon-voting-app
+    image: nicolaka/voting-app:latest
     ports:
-      - "80:80"
+      - "80"
     networks:
-      - voteapp
+      voteapp:
+    labels:
+     interlock.hostname: "vote"
+     interlock.domain:   "example.org"
   result-app:
-    image: ehazlett/dockercon-result-app
+    image: nicolaka/result-app:latest
     ports:
-      - "5000:80"
+      - "80"
     networks:
-      - voteapp
+      voteapp:
+    labels:
+     interlock.hostname: "result"
+     interlock.domain:   "example.org"
   worker:
-    image: ehazlett/dockercon-worker
+    image: nicolaka/worker:latest
     networks:
-      - voteapp
+      voteapp:
+       aliases:
+        - workers
   redis:
     image: redis
     ports:
       - "6379"
     networks:
-      - voteapp
+      voteapp:
     container_name: redis
+
   db:
     image: postgres:9.4
     volumes:
       - "db-data:/var/lib/postgresql/data"
     networks:
-      - voteapp
+      voteapp:
     container_name: db
 volumes:
   db-data:
