@@ -5,39 +5,25 @@ services:
     image: nicolaka/voting-app:latest
     ports:
       - "80"
-    networks:
-      voteapp:
     labels:
      interlock.hostname: "vote"
-     interlock.domain:   "example.org"
+     interlock.domain:   "example.com"
   result-app:
     image: nicolaka/result-app:latest
     ports:
       - "80"
-    networks:
-      voteapp:
     labels:
      interlock.hostname: "result"
-     interlock.domain:   "example.org"
+     interlock.domain:   "example.com"
   worker:
     image: nicolaka/worker:latest
-    networks:
-      voteapp:
-       aliases:
-        - workers
   redis:
     image: redis
     ports:
       - "6379"
-    networks:
-      voteapp:
     container_name: redis
 
   db:
     image: postgres:9.4
-    networks:
-      voteapp:
     container_name: db
 
-networks:
-  voteapp:
